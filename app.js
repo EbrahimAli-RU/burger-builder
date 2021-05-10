@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const authRouter = require('./router/user')
 const ingredientRouter = require('./router/ingredient')
+const orderRouter = require('./router/order')
 const globalErrorHandler = require('./controller/errorController')
 const appError = require('./utils/appError')
 const email = require('./utils/email')
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use('/api/v1/user', authRouter)
 app.use('/api/v1/ingredient', ingredientRouter)
+app.use('/api/v1/order', orderRouter)
 
 
 app.all(`*`, (req, res, next) => {
