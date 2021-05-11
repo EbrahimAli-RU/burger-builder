@@ -12,10 +12,10 @@ class Orders extends Component {
   render() {
     let orders = <Spinner />;
     if (!this.props.loading) {
-      orders = this.props.orders.map((order) => {
+      orders = this.props.orders.map((order, i) => {
         return (
           <Order
-            key={order.id}
+            key={i}
             ingredients={order.ingredient}
             price={+order.price}
           />
@@ -46,3 +46,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withErrorHandler(Orders, axios));
+//

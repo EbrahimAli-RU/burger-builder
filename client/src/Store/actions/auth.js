@@ -8,11 +8,11 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (authData) => {
+export const authSuccess = (token, userId) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    token: authData.idToken,
-    userId: authData.localId,
+    token: token,
+    userId: userId,
   };
 };
 
@@ -48,24 +48,28 @@ export const auth = (email, password, isSignUp) => {
       password,
     };
     let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDutXSD7lMQhBwhStfBbDYu_0IIGLkMZzA";
+      "http://localhost:8000/api/v1/user/signup";
 
     if (!isSignUp) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDutXSD7lMQhBwhStfBbDYu_0IIGLkMZzA";
+        "http://localhost:8000/api/v1/user/signin";
     }
     axios
       .post(url, authData)
       .then((response) => {
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-        localStorage.setItem("token", response.data.idToken);
+        localStorage.setItem("token", response.data.data.token);
         localStorage.setItem("expirationDate", expirationDate);
-        localStorage.setItem("userId", response.data.localId);
-        dispatch(authSuccess(response.data));
+        localStorage.setItem("userId", response.data.data.user._id);
+        dispatch(authSuccess(response.data.data.token, response.data.data.user._id));
         dispatch(checkAuthTimeout(response.data.expiresIn));
       })
       .catch((err) => {
-        dispatch(authFail(err.response.data.error));
+        if (err.response.data.message.split(':')[2] === ` Not an email, please provide correct email`) {
+          const message = err.response.data.message.split(':')[2]
+          err.response.data.message = message
+        }
+        dispatch(authFail(err.response.data));
       });
   };
 };
@@ -88,11 +92,7 @@ export const checkAuthState = () => {
         dispatch(authLogout());
       } else {
         const userId = localStorage.getItem("userId");
-        const authdata = {
-          localId: userId,
-          idToken: token,
-        };
-        dispatch(authSuccess(authdata));
+        dispatch(authSuccess(token, userId));
         dispatch(
           checkAuthTimeout(
             (expirationDate.getTime() - new Date().getTime()) / 1000
