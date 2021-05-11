@@ -8,6 +8,6 @@ router.post('/signin', authController.signIn)
 router.post('/forgotpassword', authController.forgotPassword)
 router.patch('/resetpassword', authController.resetPassword)
 router.patch('/updatepassword', authController.protect, authController.updatePassword)
-router.get('/', authController.protect, authController.getAllUsers)
+router.get('/', authController.protect, authController.restrictTo('admin'), authController.getAllUsers)
 
 module.exports = router

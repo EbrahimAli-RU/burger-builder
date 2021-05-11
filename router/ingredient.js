@@ -3,10 +3,10 @@ const router = express.Router()
 
 const authController = require('../controller/authController')
 const ingredientController = require('../controller/ingredientController')
-
+router.get('/', ingredientController.getIngredient)
 router.use(authController.protect, authController.restrictTo('admin'))
 router.route('/').post(ingredientController.setIngredient)
-    .get(ingredientController.getIngredient)
+
 
 router.route('/:ingId')
     .patch(ingredientController.updateIngredient)
