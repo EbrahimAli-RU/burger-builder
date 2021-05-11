@@ -24,3 +24,25 @@ exports.deleteOrder = catchAsync(async (req, res, next) => {
         }
     })
 })
+
+exports.getSpecficUserOrder = catchAsync(async (req, res, next) => {
+    const order = await Order.find({ user: req.params.userId })
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            order
+        }
+    })
+})
+
+exports.getAllOrders = catchAsync(async (req, res, next) => {
+    const order = await Order.find()
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            order
+        }
+    })
+})
