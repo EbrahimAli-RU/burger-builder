@@ -65,6 +65,7 @@ export const auth = (email, password, isSignUp) => {
         dispatch(checkAuthTimeout(response.data.expiresIn));
       })
       .catch((err) => {
+        console.log(err.response)
         if (err.response.data.message.split(':')[2] === ` Not an email, please provide correct email`) {
           const message = err.response.data.message.split(':')[2]
           err.response.data.message = message

@@ -4,7 +4,8 @@ const app = require('./app')
 
 //Connect Database
 const DB = process.env.MONGODB_LOCAL_URL
-mongoose.connect(DB, {
+const URI = `mongodb+srv://ebrahim:qtp8d4ep@burger-builder.lkdck.mongodb.net/burger-builder?retryWrites=true&w=majority`
+mongoose.connect(URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
