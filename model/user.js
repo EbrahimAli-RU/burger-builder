@@ -4,11 +4,11 @@ const validator = require('validator')
 const crypto = require('crypto')
 
 const userSchema = new mongoose.Schema({
-    userName: {
-        type: String,
-        trim: true,
-        required: [true, `Username is required`],
-    },
+    // userName: {
+    //     type: String,
+    //     trim: true,
+    //     required: [true, `Username is required`],
+    // },
     email: {
         type: String,
         trim: true,
@@ -20,22 +20,22 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, `Password is required`],
-        minlength: 8,
+        minlength: 6,
         maxlength: 20,
         select: false
     },
-    confirmPassword: {
-        type: String,
-        required: [true, `Password is required`],
-        minlength: 8,
-        maxlength: 20,
-        validate: {
-            validator: function (value) {
-                return this.password === value
-            },
-            message: 'Confirm password is not same as password'
-        }
-    },
+    // confirmPassword: {
+    //     type: String,
+    //     required: [true, `Password is required`],
+    //     minlength: 8,
+    //     maxlength: 20,
+    //     validate: {
+    //         validator: function (value) {
+    //             return this.password === value
+    //         },
+    //         message: 'Confirm password is not same as password'
+    //     }
+    // },
     role: {
         type: String,
         default: 'user',

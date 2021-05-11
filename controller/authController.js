@@ -14,13 +14,16 @@ const signToken = id => {
 }
 
 exports.signup = catchAsync(async (req, res, next) => {
-    const user = await User.create(req.body)
-
+    const user = await User.findOne({ email: req.body.email })
+    if (user) {
+        return next(new appError(`This email is taken! please use another one`, 400))
+    }
+    const newUser = await User.create(req.body)
     res.status(201).json({
         status: 'success',
         data: {
-            user,
-            token: signToken(user._id)
+            newUser,
+            token: signToken(newUser._id)
         }
     })
 })
@@ -38,7 +41,7 @@ exports.signIn = catchAsync(async (req, res, next) => {
     res.status(200).json({
         status: 'success',
         data: {
-            user: user._id,
+            user: { _id: user._id },
             token: signToken(user._id)
         },
         message: `Logged in Successfully!`
