@@ -31,11 +31,9 @@ export const purchaseBurger = (orderData, token) => {
         headers: { 'Authorization': `Bearer ${token}` }
       }) //?auth=${token}
       .then((res) => {
-        console.log(res.data.data.order._id)
         dispatch(purchaseBurgerSuccess(res.data.data.order._id, orderData));
       })
       .catch((err) => {
-        console.log(err.response)
         dispatch(purchaseBurgerFail(err));
       });
   };

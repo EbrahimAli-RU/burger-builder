@@ -20,8 +20,6 @@ if (process.env.NODE_ENV === "development") {
     app.use(morgan('dev'))
 }
 
-
-
 app.use('/api/v1/user', authRouter)
 app.use('/api/v1/ingredient', ingredientRouter)
 app.use('/api/v1/order', orderRouter)
