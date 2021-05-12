@@ -1,5 +1,5 @@
 {
-  "name": "template",
+  "name": "burger-builder",
   "engines": {
     "node": "14.15.1"
   },
