@@ -62,14 +62,9 @@ export const auth = (email, password, isSignUp) => {
         localStorage.setItem("expirationDate", expirationDate);
         localStorage.setItem("userId", response.data.data.user._id);
         dispatch(authSuccess(response.data.data.token, response.data.data.user._id));
-        dispatch(checkAuthTimeout(response.data.expiresIn));
+        dispatch(checkAuthTimeout(expirationDate));
       })
       .catch((err) => {
-        console.log(err.response)
-        if (err.response.data.message.split(':')[2] === ` Not an email, please provide correct email`) {
-          const message = err.response.data.message.split(':')[2]
-          err.response.data.message = message
-        }
         dispatch(authFail(err.response.data));
       });
   };

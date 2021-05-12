@@ -31,7 +31,7 @@ const handleMongoDuplicateKeyError = (err) => {
 }
 
 const handleMongoValidatorError = err => {
-    return new appError(err.message, 400)
+    return new appError(err.message.split(':')[2], 400)
 }
 
 const handleCastErrorDB = err => {
