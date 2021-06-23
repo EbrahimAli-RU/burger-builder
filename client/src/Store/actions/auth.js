@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../axios-orders";
 
 import * as actionTypes from "./actionTypes";
 
@@ -48,11 +48,11 @@ export const auth = (email, password, isSignUp) => {
       password,
     };
     let url =
-      "http://localhost:8000/api/v1/user/signup";
+      "/user/signup";
 
     if (!isSignUp) {
       url =
-        "http://localhost:8000/api/v1/user/signin";
+        "/user/signin";
     }
     axios
       .post(url, authData)
