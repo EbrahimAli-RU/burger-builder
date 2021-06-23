@@ -12,7 +12,7 @@ const appError = require('./utils/appError')
 const email = require('./utils/email')
 
 
-app.use(cors())
+app.use(cors({origin: ['https://mern-burger-builder.herokuapp.com/']}))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
